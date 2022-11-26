@@ -1,0 +1,42 @@
+unitech-api:
+  api-key: PfD1h3J7Wnhdo7wv1e5Sn9Zq48wPwF7F
+  currency-rates-url: https://api.apilayer.com/exchangerates_data/latest?symbols=&base=
+  datasource:
+    username: root
+    password: 12345
+    url: jdbc:mysql://localhost:3306/unitech_api
+    driver: com.mysql.cj.jdbc.Driver
+  hibernate:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    format_sql: true
+    ddl-auto: update
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+      jpa:
+        open-in-view: false
+
+#jwt properties
+app:
+  jwt-secret: JWTSecretKey
+  jwt-expiration-milliseconds: 604800000
+
+
+##emailmsj
+my:
+  message:
+   body: "Please confirm your registration url: "
+   subject: "Registration Confirm Link"
