@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Date;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -37,15 +38,15 @@ public class UserServiceImpl implements UserService {
     private final static String messageBody="Please confirm your registration url: ";
 
     @Override
-    public String login(LoginRequestDto loginRequestDto) {
-        User user = userRepository.findByFin(loginRequestDto.getFin()).orElseThrow(FinNotFoundException::new);
-        if (!loginRequestDto.getPassword().equals(user.getPassword())) {
+    public Optional<User> login(String fin,String password) {
+        User user = userRepository.findByFin(fin).orElseThrow(FinNotFoundException::new);
+        if (!password.equals(user.getPassword())) {
             throw new WrongPasswordException();
         }
         if (user.getStatus().getId().equals(UserStatusEnum.UNCONFIRMED.getStatusId())) {
             throw new UnconfirmedException();
         }
-        return user.getFin();
+        return Optional.of(user);
     }
 
     @SneakyThrows

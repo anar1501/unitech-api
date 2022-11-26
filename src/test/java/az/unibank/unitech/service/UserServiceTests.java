@@ -86,7 +86,7 @@ public class UserServiceTests {
     @Test
     void should_not_found_a_user_that_doesnt_exist() {
         when(userRepository.findByFin(anyString())).thenReturn(Optional.empty());
-        org.junit.jupiter.api.Assertions.assertThrows(FinNotFoundException.class, () -> userService.login(loginRequestDto));
+        org.junit.jupiter.api.Assertions.assertThrows(FinNotFoundException.class, () -> userService.login(loginRequestDto.getFin(),loginRequestDto.getPassword()));
         verify(userRepository,times(1)).findByFin(anyString());
     }
 }

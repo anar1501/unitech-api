@@ -78,15 +78,17 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void makeTransferToAnotherAccount(TransferRequestDto transferRequestDto) {
-        Optional<User> byId = userRepository.findByEmail(transferRequestDto.getEmail());
-        if (byId.isPresent()) {
-            User user = byId.get();
-            String finOfUserByLogedIn = userService.login(userMapStruct.prepareLoginRequestDto(user));
-            if (finOfUserByLogedIn.equals(transferRequestDto.getEmail())) {
-                throw new SameAccountException();
+        Optional<User> optional = userRepository.findByEmail(transferRequestDto.getEmail());
+        if (optional.isPresent()) {
+            User user = optional.get();
+            Optional<User> userOptional = userService.login(user.getFin(),user.getPassword());
+            if (userOptional.isPresent()) {
+                if (userOptional.get().getEmail().equals(transferRequestDto.getEmail())) {
+                    throw new SameAccountException();
+                }
             }
         }
-        if (transferRequestDto.getAmount()==0.0) {
+        if (transferRequestDto.getAmount() == 0.0) {
             throw new NoEnoughCashStrangeException();
         } else if (accountRepository.findTopByUserId(transferRequestDto.getUserId()).get().getUser().getStatus().getId().equals(UserStatusEnum.UNCONFIRMED.getStatusId())) {
             throw new DeactiveAccountException();

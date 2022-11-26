@@ -18,10 +18,12 @@ public interface UserMapStruct {
     @Mapping(target = "activationCode", ignore = true)
     User toEntity(RegisterRequestDto dto);
     List<UserResponseDto>map(List<User>users);
+    @Mapping(target = "fin",source = "fin")
     UserResponseDto map(User user);
 
     RegisterRequestDto mapToRegisterRequestDto(User user);
 
 
     LoginRequestDto prepareLoginRequestDto(User user);
+    User map(LoginRequestDto user);
 }
