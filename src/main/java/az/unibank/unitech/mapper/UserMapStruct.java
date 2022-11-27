@@ -11,13 +11,12 @@ import java.util.List;
 
 @Mapper(componentModel = "spring",builder = @Builder(disableBuilder = true),imports = {Object.class},injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface UserMapStruct {
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "createdDate", ignore = true)
-    @Mapping(target = "status", ignore = true)
-    @Mapping(target = "expiredDate", ignore = true)
-    @Mapping(target = "activationCode", ignore = true)
-    List<UserResponseDto>map(List<User>users);
     @Mapping(target = "fin",source = "fin")
-    UserResponseDto map(User user);
+    @Mapping(target = "id",ignore = true)
+    @Mapping(target = "status",ignore = true)
+    @Mapping(target = "createdDate",ignore = true)
+    @Mapping(target = "activationCode",ignore = true)
+    @Mapping(target = "expiredDate",ignore = true)
+    @Mapping(target = "email",ignore = true)
     User map(LoginRequestDto user);
 }

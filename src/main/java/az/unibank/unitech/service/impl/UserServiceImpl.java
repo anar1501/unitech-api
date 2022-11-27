@@ -60,10 +60,11 @@ public class UserServiceImpl implements UserService {
         user.setExpiredDate(DateUtils.prepareRegistrationExpirationDate());
         user.setActivationCode(UUID.randomUUID().toString());
         user.setStatus(userStatusRepositry.findUserStatusById(1L));
-        User save = userRepository.save(user);
-        String confirmLink = "http://localhost:8080/api/v1/auth/register-confirm?activationcode=" + save.getActivationCode();
-        messageUtils.sendAsync(save.getEmail(), messageSubject, messageBody + confirmLink);
-        returnValue.setId(save.getId());
+        User savedUser = userRepository.save(user);
+        String confirmLink = "http://localhost:8080/api/v1/auth/register-confirm?activationcode=" + savedUser.getActivationCode();
+        messageUtils.sendAsync(savedUser.getEmail(), messageSubject, messageBody + confirmLink);
+        returnValue.setId(savedUser.getId());
+        returnValue.setFin(savedUser.getFin());
         return returnValue;
     }
 
