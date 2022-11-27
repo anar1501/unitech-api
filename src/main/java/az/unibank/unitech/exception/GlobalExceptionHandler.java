@@ -38,14 +38,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleAlreadyConfirmedException(AlreadyConfirmedException e) {
         ErrorResponse errorResponse = new ErrorResponse(e.getMessage(),"400");
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @ExceptionHandler(ExpirationCodeIsExpiredException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ErrorResponse> handleExpirationCodeIsExpiredException(ExpirationCodeIsExpiredException e) {
-        ErrorResponse errorResponse = new ErrorResponse(e.getMessage(),"500");
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(UnconfirmedException.class)
@@ -65,29 +58,49 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(WrongPasswordException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleWrongPasswordException(WrongPasswordException e) {
-        ErrorResponse errorResponse = new ErrorResponse(e.getMessage(),"404");
+        ErrorResponse errorResponse = new ErrorResponse(e.getMessage(),"400");
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(EmailIsIncorrectException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<ErrorResponse> handleEmailIsIncorrectException(EmailIsIncorrectException e) {
-        ErrorResponse errorResponse = new ErrorResponse(e.getMessage(),"404");
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-    }
-
-
     @ExceptionHandler(FinAlreadyTaken.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleFinAlreadyTaken(FinAlreadyTaken customerNotFoundException) {
-        ErrorResponse ex = new ErrorResponse(customerNotFoundException.getMessage(), "404");
+        ErrorResponse ex = new ErrorResponse(customerNotFoundException.getMessage(), "400");
         return new ResponseEntity<>(ex, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(EmailAlreadyTaken.class)
+    @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<ErrorResponse> handleEmailAlreadyTaken(EmailAlreadyTaken customerNotFoundException) {
-        ErrorResponse ex = new ErrorResponse(customerNotFoundException.getMessage(), "400");
+    public ResponseEntity<ErrorResponse> handleUserNotFoundException(UserNotFoundException userNotFoundException) {
+        ErrorResponse ex = new ErrorResponse(userNotFoundException.getMessage(), "404");
+        return new ResponseEntity<>(ex, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(SameAccountException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleSameAccountException(SameAccountException userNotFoundException) {
+        ErrorResponse ex = new ErrorResponse(userNotFoundException.getMessage(), "400");
+        return new ResponseEntity<>(ex, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(NonAccountExistException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ErrorResponse> handleNonAccountExistException(NonAccountExistException nonAccountExistException) {
+        ErrorResponse ex = new ErrorResponse(nonAccountExistException.getMessage(), "404");
+        return new ResponseEntity<>(ex, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(NoEnoughCashStrangeException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleNoEnoughCashStrangeException(NoEnoughCashStrangeException noEnoughCashStrangeException) {
+        ErrorResponse ex = new ErrorResponse(noEnoughCashStrangeException.getMessage(), "400");
+        return new ResponseEntity<>(ex, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DeactiveAccountException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleDeactiveAccountException(DeactiveAccountException deactiveAccountException) {
+        ErrorResponse ex = new ErrorResponse(deactiveAccountException.getMessage(), "400");
         return new ResponseEntity<>(ex, HttpStatus.BAD_REQUEST);
     }
 }
