@@ -31,10 +31,8 @@ public class UserServiceImpl implements UserService {
     private final static Date currentDate = new Date();
     @Autowired(required = false) private MessageUtils messageUtils;
 
-//    @Value("${my.message.subject}")
     private final static String messageSubject="Registration Confirm Link";
 
-//    @Value("${my.message.body}")
     private final static String messageBody="Please confirm your registration url: ";
 
     @Override

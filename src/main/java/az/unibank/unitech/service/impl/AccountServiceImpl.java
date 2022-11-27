@@ -43,8 +43,6 @@ public class AccountServiceImpl implements AccountService {
     @Autowired(required = false)
     private UserService userService;
     @Autowired(required = false)
-    private UserMapStruct userMapStruct;
-    @Autowired(required = false)
     private AccountDaoImpl accountDao;
     @Autowired(required = false)
     private ApplicationConfig applicationConfig;

@@ -103,4 +103,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorResponse ex = new ErrorResponse(deactiveAccountException.getMessage(), "400");
         return new ResponseEntity<>(ex, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(ExpirationCodeIsExpiredException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleExpirationCodeIsExpiredException(ExpirationCodeIsExpiredException e) {
+        ErrorResponse errorResponse = new ErrorResponse(e.getMessage(),"400");
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
 }

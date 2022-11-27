@@ -15,6 +15,5 @@ public class TransferRequestDto {
     private Long accountId;
     private double amount;
     private Long userId;
-//    @Currency({"AZN","TL"})
     private String price;
 }

@@ -22,9 +22,6 @@ public class AuthController {
     @Autowired(required = false)
     private UserService userService;
 
-    @Autowired(required = false)
-    private UserMapStruct userMapStruct;
-
     @PostMapping(value = "/register")
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponseDto register(@RequestBody RegisterRequestDto registerRequestDto) {
@@ -34,7 +31,6 @@ public class AuthController {
     @PostMapping(value = "/login")
     @ResponseStatus(HttpStatus.OK)
     public UserResponseDto login(@RequestBody LoginRequestDto loginRequestDto) {
-//        User mappedUser = userMapStruct.map(loginRequestDto);
         User mappedUser=new User();
         mappedUser.setPassword(loginRequestDto.getPassword());
         mappedUser.setFin(loginRequestDto.getFin());
